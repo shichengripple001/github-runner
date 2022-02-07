@@ -1,0 +1,5 @@
+authSecret:
+  create: true
+  name: github-token
+  github_token: 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
+  github_basicauth_username: shichengsgripple001
