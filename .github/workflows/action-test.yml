@@ -2,7 +2,7 @@ name: GitHub Actions Demo
 on: [push]
 jobs:
   Explore-GitHub-Actions:
-    runs-on: ["self-hosted", "custom-fedora-runner"]
+    runs-on: ["self-hosted", "self-built-runner-test"]
     container:
       image: ubuntu:latest
     steps:
