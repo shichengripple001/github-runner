@@ -19,6 +19,7 @@ jobs:
           npm install
       - name: test
         id: test
+        continue-on-error: true
         run: |
           #ls ${{ github.workspace }}
           exit 1
