@@ -2,7 +2,7 @@ name: GitHub Actions Demo
 on: [push]
 jobs:
   Explore-GitHub-Actions:
-    runs-on: ["self-hosted", "self-built-runner-test"]
+    runs-on: ["self-hosted", "custom-runner"]
     container:
       image: node:latest
     steps:
