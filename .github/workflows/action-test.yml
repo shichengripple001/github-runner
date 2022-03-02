@@ -24,3 +24,4 @@ jobs:
           #ls ${{ github.workspace }}
           exit 1
       - run: echo "🍏 This job's status is ${{ steps.test.outcome }}."
+        if: steps.test.outcome != 'success'
