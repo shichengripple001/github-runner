@@ -17,4 +17,9 @@ jobs:
         run: |
           #ls ${{ github.workspace }}
           npm install
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+      - name: test
+        id: test
+        run: |
+          #ls ${{ github.workspace }}
+          exit 1
+      - run: echo "🍏 This job's status is ${{ steps.test.outcome }}."
