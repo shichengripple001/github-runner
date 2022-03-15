@@ -2,7 +2,7 @@ name: GitHub Actions Demo
 on: [push]
 jobs:
   Explore-GitHub-Actions:
-    runs-on: ["self-hosted", "self-built-runner-test"]
+    runs-on: ["self-hosted", "custom-runner"]
     container:
       image: node:latest
     steps:
@@ -17,4 +17,11 @@ jobs:
         run: |
           #ls ${{ github.workspace }}
           npm install
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+      - name: test
+        id: test
+        continue-on-error: true
+        run: |
+          #ls ${{ github.workspace }}
+          exit 1
+      - run: echo "🍏 This job's status is ${{ steps.test.outcome }}."
+        if: steps.test.outcome != 'success'
