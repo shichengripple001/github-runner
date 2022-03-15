@@ -70,7 +70,7 @@ jobs:
 
       - name: Build parameters
         id: cachekeys
-        shell: powershell
+        shell: bash
         run: |
           echo "::set-output name=cmakeconfig::${{ hashfiles(
             'rippled/CMakeFiles.txt', 'rippled/Builds/CMake/**',
@@ -82,8 +82,8 @@ jobs:
             '!rippled/src/**/*.png', '!rippled/src/**/*.php') }}"
           echo "::set-output name=instructions::${{ hashfiles(
             'rippled/**/windows.yml') }}"
-          vcpkgver=$( vcpkg version )
-          echo "vcpkg version is ${vcpkgver}"
+          vcpkgver="2022-03-09-1affd32f93b299d5a907816c328ca3ededb73a7e"
+          echo "vcpkg version is 2022-03-09-1affd32f93b299d5a907816c328ca3ededb73a7e"
           echo "::set-output name=vcpkgver::${vcpkgver}"
           export NUM_PROCESSORS=${NUM_PROCESSORS:-$(nproc)}
           echo "NUM PROC is ${NUM_PROCESSORS}"
