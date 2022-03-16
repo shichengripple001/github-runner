@@ -84,7 +84,7 @@ jobs:
             'rippled/**/windows.yml') }}"
           vcpkgver="2022-03-09-1affd32f93b299d5a907816c328ca3ededb73a7e"
           echo "vcpkg version is 2022-03-09-1affd32f93b299d5a907816c328ca3ededb73a7e"
-          #echo "::set-output name=vcpkgver::${vcpkgver}"
-          #export NUM_PROCESSORS=${NUM_PROCESSORS:-$(nproc)}
-          #echo "NUM PROC is ${NUM_PROCESSORS}"
-          #echo "::set-output name=NUM_PROCESSORS::${NUM_PROCESSORS}"
+          echo "::set-output name=vcpkgver::${vcpkgver}"
+          export NUM_PROCESSORS=${NUM_PROCESSORS:-$(nproc)}
+          echo "NUM PROC is ${NUM_PROCESSORS}"
+          echo "::set-output name=NUM_PROCESSORS::${NUM_PROCESSORS}"
