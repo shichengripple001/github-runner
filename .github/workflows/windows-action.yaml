@@ -150,7 +150,7 @@ jobs:
         # Do this step early so that if the download fails, the job fails fast
         if: ${{ steps.boostkeys.outputs.download_boost_file == 'true' }}
         # Powershell
-        shell: pwsh
+        shell: powershell
         run: |
             $Client = New-Object System.Net.WebClient
             $Dest = "${{ steps.boostkeys.outputs.boost_file_win }}"
