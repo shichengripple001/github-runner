@@ -88,3 +88,81 @@ jobs:
           export NUM_PROCESSORS=${NUM_PROCESSORS:-$(nproc)}
           echo "NUM PROC is ${NUM_PROCESSORS}"
           echo "::set-output name=NUM_PROCESSORS::${NUM_PROCESSORS}"
+      - name: Source cache
+        id: srccache
+        continue-on-error: true
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.NIH_SRC_PATH}}
+          key: ${{ runner.os }}-nihsrc-${{ steps.cachekeys.outputs.cmakeconfig }}-${{ steps.cachekeys.outputs.instructions }}
+          restore-keys: |
+            ${{ runner.os }}-nihsrc-${{ steps.cachekeys.outputs.cmakeconfig }}-
+
+      - name: Boost cache
+        id: boostcache
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.BOOST_CACHE_DIR }}
+          key: ${{ runner.os }}-boost-${{ env.BOOST_ROOT }}
+
+      - name: Vcpkg cache
+        id: vcpkgcache
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.VCPKG_CACHE_DIR }}
+          key: ${{ runner.os }}-vcpkg-${{ steps.cachekeys.outputs.vcpkgver }}-${{ steps.cachekeys.outputs.instructions }}
+          restore-keys: |
+            ${{ runner.os }}-vcpkg-${{ steps.cachekeys.outputs.vcpkgver }}-
+            ${{ runner.os }}-vcpkg-
+
+      - name: Boost parameters
+        id: boostkeys
+        shell: bash
+        run: |
+          boost_file_win="${BOOST_CACHE_DIR}\boost.tar.bz2"
+          boost_file=$( cygpath --unix "${boost_file_win}" )
+          download_boost_file=$( [[ -f ${boost_file} ]] && echo false || echo true )
+          echo "boost_file_win is \"${boost_file_win}\""
+          echo "boost_file is \"${boost_file}\""
+          echo "download_boost_file is \"${download_boost_file}\""
+          echo "::set-output name=boost_file_win::${boost_file_win}"
+          echo "::set-output name=boost_file::${boost_file}"
+          echo "::set-output name=download_boost_file::${download_boost_file}"
+
+      - name: Dump environment
+        shell: bash
+        run: |
+          env
+          set | grep =
+
+          [[ "${verbose}" == "true" ]] && \
+            time find /c/Program\ Files\ \(x86\)/ -iname 'cl.exe' || true
+
+      - name: Setup cache folders
+        shell: bash
+        env:
+          NUM_PROCESSORS: ${{ steps.cachekeys.outputs.NUM_PROCESSORS }}
+        run: |
+            mkdir -pv ${CACHE_DIR} ${NIH_CACHE_ROOT} ${BOOST_CACHE_DIR} \
+                ${VCPKG_CACHE_DIR} ${NIH_SRC_PATH}
+
+      - name: Download Boost
+        # Do this step early so that if the download fails, the job fails fast
+        if: ${{ steps.boostkeys.outputs.download_boost_file == 'true' }}
+        # Powershell
+        shell: pwsh
+        run: |
+            $Client = New-Object System.Net.WebClient
+            $Dest = "${{ steps.boostkeys.outputs.boost_file_win }}"
+            try {
+                $Url = "$env:BOOST_URL"
+                "Attempting to download $Url to $Dest"
+                $Client.DownloadFile($Url, $Dest)
+                ls "$Dest"
+            }
+            catch {
+                $Url = "$env:BOOST_URL2"
+                "Attempting to download $Url to $Dest"
+                $Client.DownloadFile($Url, $Dest)
+                ls "$Dest"
+            }
