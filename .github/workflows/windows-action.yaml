@@ -70,7 +70,7 @@ jobs:
 
       - name: Build parameters
         id: cachekeys
-        shell: bash
+        shell: C:\Program Files\Git\bin\bash.exe
         run: |
           echo "::set-output name=cmakeconfig::${{ hashfiles(
             'rippled/CMakeFiles.txt', 'rippled/Builds/CMake/**',
