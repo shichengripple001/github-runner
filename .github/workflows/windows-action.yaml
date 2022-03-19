@@ -58,5 +58,6 @@ jobs:
           set | grep =
           echo which
           which cmake
-          time find /c/Program\ Files\ \(x86\)/ -iname 'cl.exe' || true
+          which cl.exe
+          # time find /c/Program\ Files\ \(x86\)/ -iname 'cl.exe' || true
 
