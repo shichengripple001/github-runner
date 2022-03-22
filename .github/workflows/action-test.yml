@@ -15,7 +15,7 @@ jobs:
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: use cache
         id: cache-foo
-        uses: idein/action-s3-cache
+        uses: idein/action-s3-cache@v1.0.0
         with:
           key: cache-test
           path: cache/
@@ -45,7 +45,7 @@ jobs:
     steps:
       - name: use cache
         id: cache-foo
-        uses: idein/action-s3-cache
+        uses: idein/action-s3-cache@1.0.0
         with:
           key: cache-test
           path: cache/
