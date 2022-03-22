@@ -45,7 +45,7 @@ jobs:
     steps:
       - name: use cache
         id: cache-foo
-        uses: idein/action-s3-cache@1.0.0
+        uses: idein/action-s3-cache@v1.0.0
         with:
           key: cache-test
           path: cache/
