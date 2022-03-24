@@ -26,6 +26,7 @@ jobs:
       - name: List files in the repository
         run: |
           #ls ${{ github.workspace }}
+          echo ${{ steps.cache-foo.outputs.cache-hit }}
           mkdir cache
           echo "test" >> cache/test
           npm install
