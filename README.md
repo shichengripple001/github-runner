@@ -1,2 +1,2 @@
-dfd# github-runner
+# github-runner
 sdf
